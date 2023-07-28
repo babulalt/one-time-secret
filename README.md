@@ -2,6 +2,21 @@
 one time secret
 
 
+# Install Dependencies
+```
+go mod tidy
+```
+
+# Run 
+```
+go run main.go
+````
+
+# Build
+```
+go build -o main main.go
+```
+
 To install Go Migrate
 
 ```
