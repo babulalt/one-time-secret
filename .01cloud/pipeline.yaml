@@ -28,7 +28,8 @@ spec:
       - name: workspace
         workspace: workspace
       runAfter: 
-        - git-clone
+        - test
+        - list
       taskRef:
         name: lint
     - name: test
@@ -36,7 +37,6 @@ spec:
       - name: workspace
         workspace: workspace
       runAfter: 
-        - lint
-        - list
+        - git-clone
       taskRef:
         name: test
