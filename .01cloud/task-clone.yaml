@@ -3,7 +3,7 @@ kind: Task
 metadata:
   name: git-clone
 spec:
-   params:
+  params:
   - name: url
     type: string
     description: The URL of the Git repository to clone.
