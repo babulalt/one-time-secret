@@ -12,6 +12,6 @@ spec:
         cd $(workspaces.workspace.path)
         ls
         echo "Lint task start..."
-        golangci-lint run ./...
+        golangci-lint run --timeout 10m0s ./...
         echo "Lint completed"
         sleep 1
