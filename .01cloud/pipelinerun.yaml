@@ -1,10 +1,10 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-  generateName: zro-pipeline-run
+  generateName: ci-pipeline-run
 spec:
   pipelineRef:
-    name: zro-pipeline
+    name: ci-pipeline
   workspaces:
     - name: workspace
       persistentVolumeClaim:
