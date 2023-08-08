@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: list
+spec:
+  workspaces:
+  - name: workspace
+  steps:
+    - name: list
+      image: alpine
+      script: |
+        echo "project from path $(workspaces.workspace.path)"
+        ls $(workspaces.workspace.path)
+        sleep 1

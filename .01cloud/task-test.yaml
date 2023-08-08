@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: test
+spec:
+  workspaces:
+  - name: workspace
+  steps:
+    - name: test
+      image: golangci/golangci-lint:v1.50.0
+      script: |
+        echo "Test task init..."
+        cd $(workspaces.workspace.path)
+        ls
+        go test -v -coverprofile=cover.out ./...
+        go tool cover -func=cover.out
+        echo "Test completed"
+        sleep 1
