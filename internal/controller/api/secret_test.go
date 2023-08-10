@@ -419,7 +419,6 @@ func TestListSecretsAPI(t *testing.T) {
 
 func requireBodyMatchSecret(t *testing.T, body *bytes.Buffer, secret string) {
 	data := body.Bytes()
-
 	var gotSecret interface{}
 	err := json.Unmarshal(data, &gotSecret)
 	require.NoError(t, err)
@@ -435,7 +434,6 @@ func randomSecrets(creator string) db.Secret {
 }
 func requireBodyMatchSecrets(t *testing.T, body *bytes.Buffer, secrets []db.Secret) {
 	data := body.Bytes()
-
 	var gotAccounts []db.Secret
 	err := json.Unmarshal(data, &gotAccounts)
 	require.NoError(t, err)
