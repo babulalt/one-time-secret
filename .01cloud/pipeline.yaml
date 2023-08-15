@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: ci-pipeline
+spec:
+  workspaces:
+  - name: workspace
+  tasks:
+    - name: git-clone
+      params:
+       - name: url
+         value: "https://github.com/babulalt/one-time-secret.git"
+      workspaces:
+      - name: workspace
+        workspace: workspace
+      taskRef:
+        name: git-clone
