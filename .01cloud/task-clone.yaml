@@ -36,6 +36,6 @@ spec:
         "$(workspaces.workspace.path)/app"
     - name: list-contents
       image: alpine
-       script: |
-        echo "Contents of the workspace directory:"
+      script: |
+         echo "Contents of the workspace directory:"
         ls -al "$(workspaces.workspace.path)/app"
