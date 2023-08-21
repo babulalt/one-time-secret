@@ -2,37 +2,42 @@ apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: git-clone
+  labels:
+    app.kubernetes.io/version: "0.7"
 spec:
-  params:
-  - name: url
-    type: string
-    description: The URL of the Git repository to clone.
-    default: "https://github.com/babulalt/one-time-secret.git"
-  - name: revision
-    description: git revision to checkout (branch, tag, sha, ref…)
-    type: string
-    default: pipeline-sucess
-  - name: sub_directory
-    description: subdirectory change
-    default: "/"
   workspaces:
-  - name: workspace
+    - name: workspace
+      description: The git repo will be cloned onto the volume backing this Workspace.
+  params:
+    - name: repo
+      description: git url to clone
+      type: string
+    - name: revision
+      description: git revision to checkout (branch, tag, sha, ref…)
+      type: string
+      default: master
+    - name: sub_directory
+      description: subdirectory change
+      default: "/"
   steps:
-  - name: check-directory
-    image: alpine
-    script: |
-      if [ -d "$(workspaces.workspace.path)" ] && [ -z "$(ls -A $(workspaces.workspace.path))" ]; then
-        echo "Directory is empty, proceeding with git clone..."
-      else
-        echo "Directory is not empty, skipping git clone..."
-        exit 0
-      fi
-  - name: git-clone
-    image: alpine/git
-    script: |
-      git clone -b "$(params.revision)" "$(params.url)" $(workspaces.workspace.path)
-  - name: list-contents
-    image: alpine
-    script: |
-      echo "Contents of the workspace directory:"
-      ls -al $(workspaces.workspace.path)
+    - name: git-clone
+      image: zeronecloud/clone:latest
+      env:
+        - name: PARAM_URL
+          value: $(params.repo)
+        - name: PARAM_REVISION
+          value: $(params.revision)
+        - name: PARAM_SUBDIR
+          value: $(params.sub_directory)
+        - name: WORKSPACE_OUTPUT_PATH
+          value: $(workspaces.workspace.path)
+      script: |
+        #!/bin/bash
+        sleep 1
+        rm -rf "${WORKSPACE_OUTPUT_PATH}/app"
+        rm -rf "${WORKSPACE_OUTPUT_PATH}/*"
+        git clone -b "${PARAM_REVISION}" "${PARAM_URL}" "${WORKSPACE_OUTPUT_PATH}/app"
+        sleep 1
+        mv ${WORKSPACE_OUTPUT_PATH}/app${PARAM_SUBDIR}* ${WORKSPACE_OUTPUT_PATH}/app${PARAM_SUBDIR}.* ${WORKSPACE_OUTPUT_PATH}/ 2>/dev/null
+        echo "Successfully cloned."
+        sleep 1

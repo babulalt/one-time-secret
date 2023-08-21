@@ -11,7 +11,7 @@ spec:
        - name: url
          value: "https://github.com/babulalt/one-time-secret.git"
        - name: revision
-         value: "pipeline-sucess"
+         value: "ci-pipeline"
       workspaces:
       - name: workspace
         workspace: workspace
