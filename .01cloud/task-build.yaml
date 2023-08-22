@@ -21,8 +21,6 @@ spec:
         until docker ps; do sleep 3; done;
         echo $DOCKER_URL;
         echo "${DOCKER_URL}"
-        echo $DOCKER_URL | sed 's/"//g'
-        echo "${DOCKER_URL}" | sed 's/"//g'
         if [[ ! -z "$(params.dockerignore)" ]] && [[ ! -f ".dockerignore" ]]; then echo "$(params.dockerignore)" > .dockerignore; fi
         docker build . -t sugamdocker35/onetime-secret:v1 || exit 1
         echo "Successfully built"
