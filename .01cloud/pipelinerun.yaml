@@ -3,7 +3,7 @@ kind: PipelineRun
 metadata:
   generateName: ci-pipeline-run
 spec:
-   pipelineRef:
+  pipelineRef:
     name: ci-pipeline
   workspaces:
     - name: workspace
