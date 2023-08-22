@@ -16,8 +16,10 @@ spec:
       script: |
         #!/bin/sh
         cd $(workspaces.workspace.path)/app
-        until docker ps; do sleep 3; done;
         ls -al
+        ls
+        sleep 20;
+        until docker ps; do sleep 3; done;
         echo Dockerfile;
         echo $DOCKER_URL;
         echo "${DOCKER_URL}"
