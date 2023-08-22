@@ -17,6 +17,9 @@ spec:
         #!/bin/sh
         cd $(workspaces.workspace.path)/app
         until docker ps; do sleep 3; done;
+        echo Dockerfile;
+        echo $DOCKER_URL;
+        echo "${DOCKER_URL}"
         if [[ ! -z "$(params.dockerignore)" ]] && [[ ! -f ".dockerignore" ]]; then echo "$(params.dockerignore)" > .dockerignore; fi
         docker build . -t "${DOCKER_URL}" || exit 1
         echo "Successfully built"
