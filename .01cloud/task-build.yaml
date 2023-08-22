@@ -16,15 +16,13 @@ spec:
       script: |
         #!/bin/sh
         cd $(workspaces.workspace.path)/app
-        ls -al
-        ls
         cat Dockerfile;
         sleep 2;
         until docker ps; do sleep 3; done;
         echo $DOCKER_URL;
         echo "${DOCKER_URL}"
         if [[ ! -z "$(params.dockerignore)" ]] && [[ ! -f ".dockerignore" ]]; then echo "$(params.dockerignore)" > .dockerignore; fi
-        docker build . || exit 1
+        docker build . -t $DOCKER_URL || exit 1
         echo "Successfully built"
       volumeMounts:
       - mountPath: /var/run/
