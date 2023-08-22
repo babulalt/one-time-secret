@@ -30,9 +30,9 @@ spec:
   - name: git-clone
     image: alpine/git
     script: |
-      git clone -b "$(params.revision)" "$(params.url)" $(workspaces.workspace.path)
+      git clone -b "$(params.revision)" "$(params.url)" "$(workspaces.workspace.path)/app"
   - name: list-contents
     image: alpine
     script: |
       echo "Contents of the workspace directory:"
-      ls -al $(workspaces.workspace.path)
+      ls -al "$(workspaces.workspace.path)/app"
