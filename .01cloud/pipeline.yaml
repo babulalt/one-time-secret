@@ -11,9 +11,20 @@ spec:
        - name: url
          value: "https://github.com/babulalt/one-time-secret.git"
        - name: revision
-         value: "pipeline-sucess"
+         value: "pipeline-ci-variable"
       workspaces:
       - name: workspace
         workspace: workspace
       taskRef:
         name: git-clone
+    - name: build-push
+      taskRef:
+        name: build-push
+      params:
+        - name: dockerignore
+          value: ".git"
+      runAfter:
+        - git-clone
+      workspaces:
+        - name: workspace
+          workspace: workspace
