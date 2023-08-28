@@ -49,8 +49,8 @@ spec:
     - name: list
       image: alpine
       script: |
-        echo "project from path $(workspaces.workspace.path)"
-        ls $(workspaces.workspace.path)
+        echo "project from path $(workspaces.workspace.path)/app"
+        ls $(workspaces.workspace.path)/app
         sleep 1
 ---
 apiVersion: tekton.dev/v1
@@ -64,8 +64,8 @@ spec:
     - name: lint
       image: golangci/golangci-lint:v1.50.0
       script: |
-        cd $(workspaces.workspace.path)
-        echo "Lint task start..."
+        cd $(workspaces.workspace.path)/app
+        echo "Lint task starting..."
         golangci-lint run -v --timeout 10m0s ./...
         echo "Lint completed"
         sleep 1
@@ -82,10 +82,10 @@ spec:
     - name: test
       image: golangci/golangci-lint:v1.50.0
       script: |
-        echo "Test task init..."
-        cd $(workspaces.workspace.path)
+        echo "Test task starting..."
+        cd $(workspaces.workspace.path)/app
         ls
         go test -v -coverprofile=cover.out ./...
         go tool cover -func=cover.out
-        echo "Test completed"
+        echo "Test task completed"
         sleep 1
