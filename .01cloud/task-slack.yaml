@@ -4,10 +4,6 @@ metadata:
   name: slack-notification
 spec:
   params:
-    - name: webhook-secret
-      type: string
-      description: secret name of the slack app webhook URL (key is url)
-      default: secret
     - name: message
       type: string
       description: plain text message
@@ -36,5 +32,5 @@ spec:
         - name: SLACK_URL
           valueFrom:
             secretKeyRef:
-              name: $(params.webhook-secret)
+              name: test
               key: url
