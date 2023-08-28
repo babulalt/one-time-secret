@@ -7,9 +7,11 @@ spec:
     - name: webhook-secret
       type: string
       description: secret name of the slack app webhook URL (key is url)
+      default: "test"
     - name: message
       type: string
       description: plain text message
+      default: "project"
     - name: bot-name
       type: string
       description: plain text message
