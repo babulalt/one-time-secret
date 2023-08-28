@@ -4,41 +4,41 @@ metadata:
   name: ci-pipeline
 spec:
   workspaces:
-    - name: workspace
+  - name: workspace
   tasks:
     - name: git-clone
       params:
-        - name: url
-          value: https://github.com/babulalt/one-time-secret.git
-        - name: revision
-          value: pipeline-ci-variable
+       - name: url
+         value: "https://github.com/babulalt/one-time-secret.git"
+       - name: revision
+         value: "pipeline-ci-variable"
       workspaces:
-        - name: workspace
-          workspace: workspace
+      - name: workspace
+        workspace: workspace
       taskRef:
         name: git-clone
     - name: list
       workspaces:
-        - name: workspace
-          workspace: workspace
+      - name: workspace
+        workspace: workspace
       taskRef:
         name: list
-      runAfter:
+      runAfter: 
         - git-clone
     - name: lint
       workspaces:
-        - name: workspace
-          workspace: workspace
-      runAfter:
+      - name: workspace
+        workspace: workspace
+      runAfter: 
         - test
         - list
       taskRef:
         name: lint
     - name: test
       workspaces:
-        - name: workspace
-          workspace: workspace
-      runAfter:
+      - name: workspace
+        workspace: workspace
+      runAfter: 
         - git-clone
       taskRef:
         name: test
@@ -47,28 +47,28 @@ spec:
         name: build-push
       params:
         - name: dockerignore
-          value: .git
+          value: ".git"
       runAfter:
         - test
         - lint
       workspaces:
         - name: workspace
           workspace: workspace
-    # - name: deploy
-    #   taskRef:
-    #     name: kubernetes-actions
-    #   runAfter:
-    #     - build-push
-    #   params:
-    #     - name: script
-    #       value: |
-    #         cd $(workspaces.workspace.path)/app/k8s
-    #         ls
-    #         kubectl apply -f deployment.yaml
-    #         echo "----------"
-    #         kubectl get deployment
-    #   workspaces:
-    #     - name: kubeconfig-dir
-    #       workspace: empty-dir
-    #     - name: manifest-dir
-    #       workspace: empty-dir
+    - name: deploy
+      taskRef:
+        name: kubernetes-actions
+      runAfter:
+        - build-push
+      params:
+        - name: script
+          value: |
+            cd $(workspaces.workspace.path)/app/k8s
+            ls
+            kubectl apply -f deployment.yaml
+            echo "----------"
+            kubectl get deployment
+      workspaces:
+        - name: kubeconfig-dir
+          workspace: empty-dir
+        - name: manifest-dir
+          workspace: empty-dir
