@@ -7,27 +7,29 @@ spec:
     - name: webhook-secret
       type: string
       description: secret name of the slack app webhook URL (key is url)
-      default: "test"
     - name: message
       type: string
       description: plain text message
-      default: "project"
     - name: bot-name
       type: string
       description: plain text message
-      default: project
+      default: Tekton Bot
     - name: icon-emoji
       type: string
       description: plain text message
-      default: ":robot_face:"
+      default: robot_face
   steps:
     - name: post
       image: docker.io/curlimages/curl:7.70.0@sha256:031df77a11e5edded840bc761a845eab6e3c2edee22669fb8ad6d59484b6a1c4
       script: >
         #!/usr/bin/env sh
-        MESSAGE=$(echo "${MESSAGE}" | sed -e 's/\"/\\\\"/g')
-        BOTNAME=$(echo "${BOTNAME}" | sed -e 's/\"/\\\\"/g')
-        JSON="{\"text\": \"$(params.message)\", \"username\": \"$(params.bot-name)\", \"icon_emoji\": \"${EMOJI}\"}"
+
+        MESSAGE=$(echo "$(params.message)" | sed -e 's/\"/\\\\"/g')
+
+        BOTNAME=$(echo "$(params.bot-name)" | sed -e 's/\"/\\\\"/g')
+
+        JSON="{\"text\": \"${MESSAGE}\", \"username\": \"${BOTNAME}\", \"icon_emoji\": \"$(params.icon-emoji)\"}"
+
         curl -X POST -H 'Content-Type: application/json' --data "${JSON}" "${SLACK_URL}"
       env:
         - name: SLACK_URL
@@ -35,4 +37,3 @@ spec:
             secretKeyRef:
               name: $(params.webhook-secret)
               key: url
-  
