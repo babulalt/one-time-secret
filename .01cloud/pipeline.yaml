@@ -60,6 +60,6 @@ spec:
         - name: message
           value: "Successfully completed CICD pipeline."
         - name: bot-name
-          value: 01cloud Pipeline
+          value: 01cloud CICD
       runAfter: 
         - build-push
