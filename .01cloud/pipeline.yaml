@@ -54,3 +54,9 @@ spec:
       workspaces:
         - name: workspace
           workspace: workspace
+    - name: slack-notification
+      taskRef:
+        name: slack-notification
+      params:
+        - name: message
+          value: Hello from Tekton!
