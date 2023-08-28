@@ -30,7 +30,6 @@ spec:
       - name: workspace
         workspace: workspace
       runAfter: 
-        - test
         - list
       taskRef:
         name: lint
@@ -39,7 +38,7 @@ spec:
       - name: workspace
         workspace: workspace
       runAfter: 
-        - git-clone
+        - list
       taskRef:
         name: test
     - name: build-push
