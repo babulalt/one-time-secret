@@ -54,21 +54,20 @@ spec:
       workspaces:
         - name: workspace
           workspace: workspace
-    - name: deploy
-      taskRef:
-        name: kubernetes-actions
-      runAfter:
-        - build-push
-      params:
-        - name: script
-          value: |
-            cd $(workspaces.workspace.path)/app/k8s
-            ls
-            kubectl apply -f deployment.yaml
-            echo "----------"
-            kubectl get deployment
-      workspaces:
-        - name: kubeconfig-dir
-          workspace: empty-dir
-        - name: manifest-dir
-          workspace: empty-dir
+    # - name: deploy
+    #   taskRef:
+    #     name: kubernetes-actions
+    #   runAfter:
+    #     - build-push
+    #   params:
+    #     - name: script
+    #       value: |
+    #         cd $(workspaces.workspace.path)/app/k8s
+    #         ls
+    #         echo "----------"
+    #         kubectl get deployment
+    #   workspaces:
+    #     - name: kubeconfig-dir
+    #       workspace: empty-dir
+    #     - name: manifest-dir
+    #       workspace: empty-dir
