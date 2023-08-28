@@ -9,3 +9,5 @@ spec:
     - name: workspace
       persistentVolumeClaim:
         claimName: workspace
+    - name: empty-dir
+      emptyDir: {}
