@@ -58,8 +58,8 @@ spec:
         name: slack-notification
       params:
         - name: message
-          value: Hello from Tekton!
+          value: "Successfully completed CICD pipeline."
         - name: bot-name
-          value: Tekton Bot
+          value: 01cloud Pipeline
       runAfter: 
         - build-push
