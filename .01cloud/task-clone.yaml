@@ -30,12 +30,12 @@ spec:
   - name: git-clone
     image: alpine/git
     script: |
-      git clone -b "$(params.revision)" "$(params.url)" $(workspaces.workspace.path)
+      git clone -b "$(params.revision)" "$(params.url)" $(workspaces.workspace.path)/app
   - name: list-contents
     image: alpine
     script: |
       echo "Contents of the workspace directory:"
-      ls -al $(workspaces.workspace.path)
+      ls -al $(workspaces.workspace.path)/app
 
 ---
 apiVersion: tekton.dev/v1
@@ -49,8 +49,8 @@ spec:
     - name: list
       image: alpine
       script: |
-        echo "project from path $(workspaces.workspace.path)"
-        ls $(workspaces.workspace.path)
+        echo "project from path $(workspaces.workspace.path)/app"
+        ls $(workspaces.workspace.path)/app
         sleep 1
 ---
 apiVersion: tekton.dev/v1
@@ -64,7 +64,7 @@ spec:
     - name: lint
       image: golangci/golangci-lint:v1.50.0
       script: |
-        cd $(workspaces.workspace.path)
+        cd $(workspaces.workspace.path)/app
         echo "Lint task start..."
         golangci-lint run -v --timeout 10m0s ./...
         echo "Lint completed"
